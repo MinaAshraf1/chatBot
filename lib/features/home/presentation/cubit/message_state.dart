@@ -17,3 +17,5 @@ class MessageSuccess extends MessageState {
 class MessageFailure extends MessageState {}
 
 class MessageLoading extends MessageState {}
+
+class MessageCansel extends MessageState {}

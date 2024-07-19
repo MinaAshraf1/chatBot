@@ -1,22 +1,27 @@
-import 'package:flutter/cupertino.dart';
+import 'package:chat_bot/core/utils/constant.dart';
+import 'package:chat_bot/main.dart';
+import 'package:flutter/material.dart';
 
 abstract class Styles {
-  static const testStyle14 = TextStyle(
+  static TextStyle testStyle14 = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    color: Color(0xff210C44)
+    color: prefs.getBool("darkMode") == true
+        ? colorsDark['color2'] : colorsLight['color2'],
   );
 
-  static const testStyle16 = TextStyle(
+  static TextStyle testStyle16 = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
-      color: Color(0xff2E1B38)
+      color: prefs.getBool("darkMode") == true
+          ? colorsDark['color5'] : colorsLight['color5']
   );
 
-  static const testStyle18 = TextStyle(
+  static TextStyle testStyle18 = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w500,
-      color: Color(0xff1B2539)
+      color: prefs.getBool("darkMode") == true
+          ? colorsDark['color4'] : colorsLight['color4']
   );
 
   static const testStyle20 = TextStyle(
@@ -31,9 +36,10 @@ abstract class Styles {
       color: Color(0xffE3DFDE)
   );
 
-  static const testStyle40 = TextStyle(
+  static TextStyle testStyle40 = TextStyle(
       fontSize: 40,
       fontWeight: FontWeight.w700,
-      color: Color(0xff210C44)
+      color: prefs.getBool("darkMode") == true
+          ? colorsDark['color2'] : colorsLight['color2']
   );
 }

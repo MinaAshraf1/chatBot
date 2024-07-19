@@ -10,7 +10,7 @@ class CustomLogo extends StatelessWidget {
       width: 150,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: const Color(0x346D1ACB),
+          color: const Color(0x88FFFFFF),
           borderRadius: BorderRadius.circular(200)
       ),
       child: Image.asset(Assets.logo,),

@@ -42,8 +42,14 @@ class CustomTextField extends StatelessWidget {
           validator: validator,
           onChanged: onChanged,
           obscureText: isPass? hidePass! : false,
+          style: const TextStyle(
+            color: Colors.black
+          ),
           decoration: InputDecoration(
             hintText: "Enter your $title",
+            hintStyle: const TextStyle(
+              color: Colors.grey
+            ),
             prefixIcon: Icon(icon,),
             suffixIcon: isPass? IconButton(
               onPressed: onPressIcon,
