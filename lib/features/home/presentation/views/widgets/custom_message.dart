@@ -1,7 +1,9 @@
 import 'package:chat_bot/core/utils/styles.dart';
 import 'package:chat_bot/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomMessage extends StatelessWidget {
   final String sentMsg;
@@ -23,7 +25,7 @@ class CustomMessage extends StatelessWidget {
           children: [
             ConstrainedBox(
               constraints: const BoxConstraints(
-                maxWidth: 300
+                maxWidth: 275
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -36,11 +38,19 @@ class CustomMessage extends StatelessWidget {
                     bottomLeft: Radius.circular(30)
                   )
                 ),
-                child: Text(
-                  sentMsg,
-                  style: prefs.getBool("darkMode") == true
-                      ? Styles.testStyle18.copyWith(color: const Color(0xff2E1B38))
-                      : Styles.testStyle18.copyWith(color: const Color(0xffF4EEFA)),
+                child: InkWell(
+                  onLongPress: () {
+                    Clipboard.setData(ClipboardData(text: sentMsg));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Copied to clipboard')),
+                    );
+                  },
+                  child: Text(
+                    sentMsg,
+                    style: prefs.getBool("darkMode") == true
+                        ? Styles.testStyle18.copyWith(color: const Color(0xff2E1B38))
+                        : Styles.testStyle18.copyWith(color: const Color(0xffF4EEFA)),
+                  ),
                 )
               ),
             ),
@@ -53,11 +63,16 @@ class CustomMessage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FaIcon(
-              FontAwesomeIcons.robot,
-              // size: 18,
-              color: prefs.getBool("darkMode") == true
-                  ? const Color(0xffF4EEFA) : const Color(0xff2E1B38),
+            GestureDetector(
+              onTap: () {
+                Share.share(botMsg);
+              },
+              child: FaIcon(
+                FontAwesomeIcons.robot,
+                // size: 18,
+                color: prefs.getBool("darkMode") == true
+                    ? const Color(0xffF4EEFA) : const Color(0xff2E1B38),
+              ),
             ),
 
             const SizedBox(width: 7,),
@@ -76,9 +91,17 @@ class CustomMessage extends StatelessWidget {
                           bottomRight: Radius.circular(30)
                       )
                   ),
-                child: Text(
-                  botMsg,
-                  style: Styles.testStyle18.copyWith(color: const Color(0xff2E1B38))
+                child: InkWell(
+                  onLongPress: () {
+                    Clipboard.setData(ClipboardData(text: botMsg));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Copied to clipboard')),
+                    );
+                  },
+                  child: Text(
+                    botMsg,
+                    style: Styles.testStyle18.copyWith(color: const Color(0xff2E1B38))
+                  ),
                 )
               ),
             )

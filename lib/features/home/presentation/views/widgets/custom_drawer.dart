@@ -61,8 +61,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   const SizedBox(width: 5,),
                   Text("Dark Mode",
-                    style: Styles.testStyle20.copyWith(
-                        fontWeight: FontWeight.w400
+                    style: Styles.testStyle18.copyWith(
+                      color: const Color(0xffF4EEFA),
+                      fontWeight: FontWeight.w400
                     ),
                   ),
                 ],

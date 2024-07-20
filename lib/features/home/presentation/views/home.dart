@@ -29,7 +29,6 @@ class _HomeState extends State<Home> {
   void initState() {
     _scrollController = ScrollController();
     message = TextEditingController();
-    BlocProvider.of<MessageCubit>(context).messageBot("hello");
     super.initState();
   }
 
@@ -105,10 +104,23 @@ class _HomeState extends State<Home> {
                 ? const Color(0xffD3AFD0) : const Color(0xff170E39),
             elevation: 3,
             shadowColor: const Color(0xffD3AFD0),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  sentMsg.clear();
+                  getMsg.clear();
+                  setState(() {
+
+                  });
+                },
+                iconSize: 24,
+                icon: const Icon(Icons.add_comment_rounded),
+              )
+            ],
           ),
           drawer:  const CustomDrawer(),
           body: Padding(
-            padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
+            padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -136,7 +148,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
-                const SizedBox(height: 20,),
+                const SizedBox(height: 5,),
 
                 CustomTextForm(
                   onPressIcon: () {
