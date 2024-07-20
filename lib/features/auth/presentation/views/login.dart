@@ -6,6 +6,7 @@ import 'package:chat_bot/features/auth/presentation/views/widgets/custom_logo_vi
 import 'package:chat_bot/features/auth/presentation/views/widgets/custom_text.dart';
 import 'package:chat_bot/features/auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:chat_bot/features/auth/presentation/views/widgets/forget_password_button.dart';
+import 'package:chat_bot/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,6 +47,8 @@ class _LoginState extends State<Login> {
           isLoading = true;
         } else if (state is LoginSuccess) {
           isLoading = false;
+          prefs.setStringList("userMsg", []);
+          prefs.setStringList("botMsg", []);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("logging in success"),
             duration: Duration(seconds: 1),

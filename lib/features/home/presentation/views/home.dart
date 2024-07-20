@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:chat_bot/core/utils/styles.dart';
 import 'package:chat_bot/features/home/presentation/cubit/message_cubit.dart';
 import 'package:chat_bot/features/home/presentation/cubit/message_state.dart';
@@ -17,11 +18,11 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>{
   late TextEditingController message;
   late ScrollController _scrollController;
-  List sentMsg = [];
-  List getMsg = [];
+  List<String> sentMsg =  prefs.getStringList("userMsg")!.toList();
+  List<String> getMsg = prefs.getStringList("botMsg")!.toList();
   bool enabled = true;
   bool botLoading = false;
 
@@ -48,6 +49,8 @@ class _HomeState extends State<Home> {
           message.text = "";
           sentMsg.add(state.sentMsg);
           getMsg.add("waiting...");
+          prefs.setStringList("userMsg", sentMsg);
+          prefs.setStringList("botMsg", getMsg);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _scrollController.animateTo(
               _scrollController.position.maxScrollExtent,
@@ -58,6 +61,7 @@ class _HomeState extends State<Home> {
         } else if (state is MessageSuccess) {
           enabled = true;
           getMsg[getMsg.length - 1] = state.getMsg;
+          prefs.setStringList("botMsg", getMsg);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _scrollController.animateTo(
               _scrollController.position.maxScrollExtent,
@@ -68,6 +72,7 @@ class _HomeState extends State<Home> {
         } else if(state is MessageFailure) {
           enabled = true;
           getMsg[getMsg.length - 1] = "please try again!";
+          prefs.setStringList("botMsg", getMsg);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _scrollController.animateTo(
               _scrollController.position.maxScrollExtent,
@@ -78,6 +83,7 @@ class _HomeState extends State<Home> {
         } else if(state is MessageCansel) {
           enabled = true;
           getMsg[getMsg.length - 1] = "Cancel Message";
+          prefs.setStringList("botMsg", getMsg);
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _scrollController.animateTo(
               _scrollController.position.maxScrollExtent,
@@ -107,11 +113,23 @@ class _HomeState extends State<Home> {
             actions: [
               IconButton(
                 onPressed: () {
-                  sentMsg.clear();
-                  getMsg.clear();
-                  setState(() {
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.warning,
+                    animType: AnimType.topSlide,
+                    title: 'Do you want to clear chat?',
+                    desc: "you can't restore chat again.",
+                    btnCancelOnPress: () {},
+                    btnOkOnPress: () {
+                      sentMsg.clear();
+                      getMsg.clear();
+                      prefs.setStringList("userMsg", sentMsg);
+                      prefs.setStringList("botMsg", getMsg);
+                      setState(() {
 
-                  });
+                      });
+                    },
+                  ).show();
                 },
                 iconSize: 24,
                 icon: const Icon(Icons.add_comment_rounded),

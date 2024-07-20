@@ -34,11 +34,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
             SwitchListTile(
               onChanged: (val){
-                prefs.setBool("darkMode", val);
-                val = !val;
-                setState(() {
-
-                });
                 AwesomeDialog(
                   context: context,
                   dialogType: DialogType.info,
@@ -47,6 +42,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   desc: "Please restart app to change mode",
                   btnCancelOnPress: () {},
                   btnOkOnPress: () {
+                    prefs.setBool("darkMode", val);
+                    val = !val;
+                    setState(() {
+
+                    });
                     SystemNavigator.pop();
                   },
                 ).show();
@@ -77,6 +77,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 prefs.setBool("logged", false);
+                prefs.setStringList("userMsg", []);
+                prefs.setStringList("botMsg", []);
                 Navigator.of(context).pushNamedAndRemoveUntil("login", (route) => false,);
               },
               padding: const EdgeInsets.all(7),

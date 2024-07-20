@@ -11,6 +11,10 @@ class MessageCubit extends Cubit<MessageState> {
     emit(SentSuccess(msg));
     try {
       emit(MessageLoading());
+      if(messageCansel) {
+        emit(MessageCansel());
+        messageCansel = !messageCansel;
+      }
       var response = await Dio().post(
           "https://chatbot-ra82.onrender.com",
           queryParameters: {
